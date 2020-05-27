@@ -204,11 +204,6 @@ class ComponentsNavbar extends React.Component {
                     Project Overview, Goals, & Team
                   </DropdownItem>
 
-                  <DropdownItem tag={Link} to="/landing-page">
-                    <i className="tim-icons icon-bank" />
-                    The Data
-                  </DropdownItem>
-
                   <DropdownItem tag={Link} to="/prediction">
                     <i className="tim-icons icon-bulb-63" />
                     Predicting Whether a Loan Will Close or Default

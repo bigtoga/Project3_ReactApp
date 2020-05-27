@@ -17,7 +17,6 @@
 */
 import React from "react";
 import classnames from "classnames";
-import { Link } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -28,6 +27,8 @@ import {
   CardFooter,
   CardImg,
   CardTitle,
+  Col,
+  Container,
   Label,
   FormGroup,
   Form,
@@ -35,17 +36,40 @@ import {
   InputGroupAddon,
   InputGroupText,
   InputGroup,
-  Container,
+  Nav,
+  NavItem,
+  NavLink,
   Row,
-  Col
+  Table,
+  TabContent,
+  TabPane
 } from "reactstrap";
 
 // core components
 import ComponentsNavbar from "components/Navbars/IndexNavbar.js";
 import Footer from "components/Footer/Footer.js";
-
+  
 class Predictions extends React.Component {
-  state = {};
+  state = {    
+    tabs: 1,
+    isLoading: false,
+    dataLoaded: false,
+    formData: {
+      howManyFiles: 5,
+      howManyRows: 10,
+      fileName: 'testForm',
+      randomFile: 'testForm02.csv'
+    },
+
+    tempData:{
+      howManyFiles: 5,
+      howManyRows: 10,
+      fileName: 'testDefault',
+      randomFile: 'testDefault02.csv'
+    },
+
+    result: []
+  };
 
   componentDidMount() {
     document.body.classList.toggle("landing-page");
@@ -53,7 +77,69 @@ class Predictions extends React.Component {
   componentWillUnmount() {
     document.body.classList.toggle("landing-page");
   }
+  
+  handleChange = (event) => {
+    const value = event.target.value;
+    const name = event.target.name;
+    var formData = this.state.formData;
+    formData[name] = value;
+    this.setState({
+      formData
+    });
+  }  
+
+  handlePredictClick = (event) => {
+    console.log("handlePredictClick clicked!");
+    const formData = this.state.formData;
+    const tempData = this.state.tempData;
+    this.setState({isLoading: true });
+    this.setState({dataLoaded: false});
+    
+    // https://stackoverflow.com/questions/43262121/trying-to-use-fetch-and-pass-in-mode-no-cors
+    var proxyUrl = 'https://peaceful-sierra-66116.herokuapp.com/',
+      targetUrl = 'http://localhost:5000/predict';
+
+    var jsonRequest = JSON.stringify(formData);
+    console.log(jsonRequest);
+
+    // https://css-tricks.com/using-data-in-react-with-the-fetch-api-and-axios/
+    fetch(targetUrl, 
+      {
+        headers: {
+          'Accept': 'application/json'
+          , 'Content-Type': 'application/json'
+        }
+        , method: 'OPTIONS'
+        , body: JSON.stringify(formData)
+      })
+      .then(response => response.json())
+      .then((results) => {
+        this.setState({
+          result: results.data
+          ,isLoading: false
+          , dataLoaded: true
+        })
+        console.log(results)
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+      
+      //.catch(error => this.setState({error, isLoading: false, dataLoaded: false}));
+  }
+
+  handleCancelClick = (event) => {
+    this.setState({ result: [] });
+    this.setState({isLoading: false});
+    this.setState({dataLoaded: false});
+  }
+
   render() {
+    const isLoading = this.state.isLoading;
+    const dataLoaded = this.state.dataLoaded;
+    const formData = this.state.formData;
+    const result = this.state.result;
+
     return (
       <>
         <ComponentsNavbar />
@@ -262,6 +348,9 @@ class Predictions extends React.Component {
                             <Input
                               placeholder="How many files should we generate?"
                               type="text"
+                              name="howManyFiles"
+                              value={formData.howManyFiles}
+                              onChange={this.handleChange} 
                               onFocus={e => this.setState({ howManyFocus: true })}
                               onBlur={e => this.setState({ howManyFocus: false })}
                             />
@@ -279,6 +368,9 @@ class Predictions extends React.Component {
                             <Input
                               placeholder="How many rows should each file contain?"
                               type="text"
+                              name="howManyRows"
+                              value={formData.howManyRows}
+                              onChange={this.handleChange} 
                               onFocus={e => this.setState({ howManyRows: true })}
                               onBlur={e => this.setState({ howManyRows: false })}
                             />
@@ -296,13 +388,37 @@ class Predictions extends React.Component {
                             <Input
                               placeholder="What should the file names start with?"
                               type="text"
+                              name="fileName"
+                              value={formData.fileName}
+                              onChange={this.handleChange} 
                               onFocus={e => this.setState({ fileNameFocus: true })}
                               onBlur={e => this.setState({ fileNameFocus: false })}
                             />
                           </InputGroup>
+                          
+                          <InputGroup
+                            className={classnames({
+                              "input-group-focus": this.state.randomFileFocus
+                            })}
+                          >
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="tim-icons icon-tag" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                              placeholder="Which random file do you want to use?"
+                              type="text"
+                              name="randomFile"
+                              value={formData.randomFile}
+                              onChange={this.handleChange} 
+                              onFocus={e => this.setState({ randomFileFocus: true })}
+                              onBlur={e => this.setState({ randomFileFocus: false })}
+                            />
+                          </InputGroup>
                           <FormGroup check className="text-left">
                             <Label check>
-                              <Input type="checkbox" />
+                              <Input type="checkbox" checked />
                               <span className="form-check-sign" />I agree to the{" "}
                               <a href="#pablo" onClick={e => e.preventDefault()}>
                                 terms and conditions
@@ -313,8 +429,23 @@ class Predictions extends React.Component {
                         </Form>
                       </CardBody>
                       <CardFooter>
-                        <Button className="btn-round" color="primary" size="lg">
-                          Get the Predictions
+                        <Button 
+                          className="btn-round" 
+                          color="primary" 
+                          size="lg"
+                          disabled={isLoading}
+                          onClick={!isLoading ? this.handlePredictClick : null}>
+                          { isLoading ? 'Making prediction' : '>>>  Get the Predictions' }
+                        
+                        </Button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <Button
+                          className="btn-round" 
+                          color="danger" 
+                          size="lg"
+                          // disabled={isLoading}
+                          onClick={this.handleCancelClick}>
+                          Reset prediction
                         </Button>
                       </CardFooter>
                     </Card>
@@ -327,7 +458,89 @@ class Predictions extends React.Component {
           {/*==========
           Section 2
           =============*/}
+          <section className="section section-lg section-coins">
+            <img
+              alt="..."
+              className="path"
+              src={require("assets/img/path3.png")}
+            />
+            
+            <a name="results"></a>
+
+            <Container className="align-items-center">
+                <Row>
+                  
+                <Col className="ml-auto mr-auto" lg="12" md="12">
+                <Card className="card-coin card-plain">
+                    <CardHeader>
+                      <img
+                        alt="..."
+                        className="img-center img-fluid rounded-circle"
+                        src={require("assets/img/datascientist4.png")}
+                      />
+                      <h4 className="title">Your Predictions</h4>
+                    </CardHeader>
+                    <CardBody>
+                      <Nav
+                        className="nav-tabs-primary justify-content-center"
+                        tabs
+                      >
+                        <NavItem>
+                          <NavLink
+                            className={classnames({
+                              active: this.state.tabs === 1
+                            })}
+                          >
+                            2011 Loan Performance Data
+                          </NavLink>
+                        </NavItem>
+                      </Nav>
+                      <TabContent
+                        className="tab-subcategories"
+                        activeTab={"tab" + this.state.tabs}
+                      >
+                        <TabPane tabId="tab1">
+                          <Table className="tablesorter" >
+                            <thead className="text-primary">
+                              <tr>
+                                <th>Credit Score</th>
+                                <th>Original Interest Rate</th>
+                                <th>Original LTV</th>
+                                <th>Original Balance</th>
+                                <th>Actual Outcome</th>
+                                <th>Predicted Outcome</th>
+                                <th>Result</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                {result.map(item => (
+                                    <tr>
+                                      <td>{item.worstCreditScore}</td>
+                                      <td>{item.origIntRate}</td>
+                                      <td>{item.origLTV}</td>
+                                      <td>${item.origUPB}</td>
+                                      <td>{item.zeroBalCode === 0 ? "Success" : "Negative"}</td>
+                                      <td>{item.Label === 0 ? "Success" : "Negative"}</td>
+                                      <td>
+                                      <div className="icon-big text-center icon-warning">
+                                            <i className={item.Label === item.zeroBalCode ? "tim-icons icon-check-2 text-success" : "tim-icons icon-trash-simple text-danger"} />
+                                          </div>
+                                        
+                                        </td>
+                                    </tr>
+                                  ))
+                                }
+                            </tbody>
+                          </Table>
+                        </TabPane>
+                      </TabContent>
+                    </CardBody>
+                  </Card>
+                  </Col>
+                </Row>
+          </Container>
           
+          </section>
 
           <Footer />
         </div>

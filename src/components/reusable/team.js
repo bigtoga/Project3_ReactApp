@@ -103,9 +103,9 @@ class Team extends React.Component {
           <div className="btn-wrapper mb-3">
                     <Button
                       color="info"
-                      href="/thedata"
+                      href="/prediction"
                     >
-                      On to the data! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      Let's get to the predictions! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <i className="tim-icons icon-triangle-right-17" />
                     </Button>
                   </div>

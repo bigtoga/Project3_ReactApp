@@ -51,5 +51,6 @@
   "optionalDependencies": {
     "eslint-plugin-flowtype": "3.13.0",
     "typescript": "3.8.3"
-  }
+  },
+  "proxy": "http://localhost:5000" 
 }
