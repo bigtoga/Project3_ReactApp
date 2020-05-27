@@ -1,0 +1,326 @@
+/*!
+
+=========================================================
+* BLK Design System React - v1.1.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/blk-design-system-react
+* Copyright 2020 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/blk-design-system-react/blob/master/LICENSE.md)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+import React from "react";
+import classnames from "classnames";
+
+// reactstrap components
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  CardTitle,
+  Col,
+  Container,
+  FormGroup,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Row
+} from "reactstrap";
+
+// core components
+import ComponentsNavbar from "components/Navbars/IndexNavbar.js";
+import Footer from "components/Footer/Footer.js";
+
+class Prediction extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputFocus: false
+    };
+  }
+  componentDidMount() {
+    document.body.classList.toggle("landing-page");
+  }
+  componentWillUnmount() {
+    document.body.classList.toggle("landing-page");
+  }
+  render() {
+    return (
+      <>
+        <ComponentsNavbar />
+
+        <div className="wrapper">
+
+          {/*==========
+          Header
+          =============*/}
+          <div className="page-header">
+            <img
+              alt="..."
+              className="path"
+              src={require("assets/img/blob.png")}
+            />
+            <img
+              alt="..."
+              className="path2"
+              src={require("assets/img/path2.png")}
+            />
+            <img
+              alt="..."
+              className="shapes triangle"
+              src={require("assets/img/triunghiuri.png")}
+            />
+            <img
+              alt="..."
+              className="shapes wave"
+              src={require("assets/img/waves.png")}
+            />
+            <img
+              alt="..."
+              className="shapes squares"
+              src={require("assets/img/patrat.png")}
+            />
+            <img
+              alt="..."
+              className="shapes circle"
+              src={require("assets/img/cercuri.png")}
+            />
+
+            {/*==========
+          Content
+          =============*/}
+            <div className="content-center">
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              {/*==========
+              Section 1
+              =============*/}
+              <section className="section">
+                <Container>
+                  <Row className="row-grid justify-content-between align-items-center text-left">
+                    <Col className="mt-lg-6" md="6">
+                      <Row>
+                        <Col className="px-2 py-2" lg="6" sm="12">
+                          <Card className="card-stats bg-default">
+                            <CardBody>
+                              <Row>
+                                <Col md="3" xs="5">
+                                  <div className="icon-big text-center icon-warning">
+                                    <i className="tim-icons icon-chart-bar-32 text-warning" />
+                                  </div>
+                                </Col>
+                                <Col md="9" xs="7">
+                                  <div className="numbers">
+                                    <CardTitle tag="p">2010</CardTitle>
+                                    <p />
+                                    <p className="card-category text-warning">24,040 loans purchased</p>
+                                  </div>
+                                </Col>
+                              </Row>
+                            </CardBody>
+                          </Card>
+                        </Col>
+                        <Col className="px-2 py-2" lg="6" sm="12">
+                          <Card className="card-stats">
+                            <CardBody>
+                              <Row>
+                                <Col md="3" xs="5">
+                                  <div className="icon-big text-center icon-warning">
+                                    <i className="tim-icons icon-chart-pie-36 text-white" />
+                                  </div>
+                                </Col>
+                                <Col md="9" xs="7">
+                                  <div className="numbers">
+                                    <CardTitle tag="p">Success</CardTitle>
+                                    <p />
+                                    <p className="card-category text-muted">20,698 loans paid</p>
+                                  </div>
+                                </Col>
+                              </Row>
+                            </CardBody>
+                          </Card>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col className="px-2 py-2" lg="6" sm="12">
+                          <Card className="card-stats">
+                            <CardBody>
+                              <Row>
+                                <Col md="4" xs="5">
+                                  <div className="icon-big text-center icon-warning">
+                                    <i className="tim-icons icon-scissors text-info" />
+                                  </div>
+                                </Col>
+                                <Col md="8" xs="7">
+                                  <div className="numbers">
+                                    <CardTitle tag="p">Fail</CardTitle>
+                                    <p />
+                                    <p className="card-category text-info">3,342 Low Performers</p>
+                                  </div>
+                                </Col>
+                              </Row>
+                            </CardBody>
+                          </Card>
+                        </Col>
+                        <Col className="px-2 py-2" lg="6" sm="12">
+                          <Card className="card-stats">
+                            <CardBody>
+                              <Row>
+                                <Col md="4" xs="5">
+                                  <div className="icon-big text-center icon-warning">
+                                    <i className="tim-icons icon-trash-simple text-success" />
+                                  </div>
+                                </Col>
+                                <Col md="8" xs="7">
+                                  <div className="numbers">
+                                    <CardTitle tag="p">$562M</CardTitle>
+                                    <p />
+                                    <p className="card-category text-success">Potential loss</p>
+                                  </div>
+                                </Col>
+                              </Row>
+                            </CardBody>
+                          </Card>
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col md="6">
+                      <br />
+                      <div className="row-grid justify-content-between align-items-center text-left row">
+                        <div className="pl-md-5">
+                          <h1>
+                            Predicting Fannie Mae's Success
+                          </h1>
+                          <p>
+                            Before we see the
+                            <span className="text-danger"> predictive POWER </span>
+                            of AI, let's first review Fannie Mae's prior loan history and understand how FannieSaves.WIN can help
+                          </p>
+                          <Button className="btn-round" color="danger" type="button" href="#participate">
+                            <i className="tim-icons icon-user-run" />
+                            &nbsp;&nbsp;&nbsp; I want to try out FannieSaves.WIN on 2011 data
+                          </Button>
+                        </div>
+
+                      </div>
+                    </Col>
+                  </Row>
+                </Container>
+              </section>
+
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br /><a name="participate"></a>
+              {/*==========
+              Section 2
+              =============*/}
+              <section className="section section-lg">
+                <Container>
+                  <div id="inputs">
+                    <h3>Inputs</h3>
+                    <p className="category">Let's have some fun!</p>
+                    <Row>
+                      <Col lg="3" sm="6">
+                        <FormGroup>
+                          <Input defaultValue="" placeholder="Regular" type="text" />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="3" sm="6">
+                        <FormGroup className="has-success">
+                          <Input
+                            className="form-control-success"
+                            defaultValue="Success"
+                            type="text"
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="3" sm="6">
+                        <FormGroup className="has-danger">
+                          <Input
+                            className="form-control-danger"
+                            defaultValue="Error Input"
+                            type="email"
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="3" sm="6">
+                        <InputGroup
+                          className={classnames({
+                            "input-group-focus": this.state.inputFocus
+                          })}
+                        >
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="fa fa-user" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Left Font Awesome Icon"
+                            type="text"
+                            onFocus={e => this.setState({ inputFocus: true })}
+                            onBlur={e => this.setState({ inputFocus: false })}
+                          />
+                        </InputGroup>
+                      </Col>
+                      <Col lg="3" sm="6">
+                        <InputGroup>
+                          <Input placeholder="Right Nucleo Icon" type="text" />
+                          <InputGroupAddon addonType="append">
+                            <InputGroupText>
+                              <i className="tim-icons icon-lock-circle" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                        </InputGroup>
+                      </Col>
+                    </Row>
+                  </div>
+                  </Container>
+              </section>
+
+              
+              <div className="space-70" />
+            </div>
+
+          </div>
+
+        </div>
+
+        <Footer />
+      </>
+    );
+  }
+}
+
+export default Prediction;
